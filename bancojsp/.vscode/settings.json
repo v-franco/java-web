@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\apache-tomcat-8.5.64\\lib\\servlet-api.jar",
+        "WEB-INF/lib/json-io-4.1.8.jar",
+        "WEB-INF/lib/mysql-connector-java-8.0.23.jar"
+    ]
+}

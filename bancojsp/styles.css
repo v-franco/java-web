@@ -1,0 +1,33 @@
+.title{
+    color: floralwhite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+.texto16{
+	color: floralwhite;
+	font-size:16pt;
+	font-weight:bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.field{
+	color:black;
+	background:floralwhite;
+	font-size:14pt;
+	font-weight:bold;
+	border-radius:7px;
+}
+
+.button{
+	color:floralwhite;
+	background:blue;
+	width: 250px;
+	height:40px;
+	font-size:16pt;
+	font-weight:bold;
+	border-radius:7px;
+}

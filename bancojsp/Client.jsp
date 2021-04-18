@@ -10,21 +10,44 @@
     if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultNocta") == null && request.getParameter("bConsultType") == null) {
 %>
 <html>
-	<head><title>Banco Servlets</title></head>
-	<body>
-		<h2>JSP Bank</h2>
-		<form action='../bancojsp/Client.jsp' method='get'>
-		<!--<form action='../basicos/ServletBanco' method='get'>-->
-			NO. CUENTA:  <input type='text' name='nocta'><br/>
-			NOMBRE:      <input type='text' name='name'><br/>
-			TIPO CUENTA: <input type='text' name='type'><br/>
-			SALDO:       <input type='text' name='balance'><br/><br/>
-					     <input type='submit' name='bCapture' value='Capturar datos'>
-					     <input type='submit' name='bConsult' value='Consultar clientes'>
-					     <input type='submit' name='bConsultNocta' value='Consultar No Cuenta'>
-					     <input type='submit' name='bConsultType' value='Consultar tipo de Cuenta'>
-		</form>
-	</body>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>JSP Bank</title>
+    <style>
+        body {background-color: dodgerblue;}
+    </style>
+	<body><center>
+        <table>
+            <h2 class="title">JSP Bank</h2>
+            <form action='../bancojsp/Client.jsp' method='get'>
+            <!--<form action='../basicos/ServletBanco' method='get'>-->
+                <tr>
+                    <td><p class="texto16"> CUENTA: </p></td>
+                    <td align="center"><input type='text' name='nocta' class="field"></td><br/>
+                </tr>
+                <tr>
+                    <td><p class="texto16"> NOMBRE: </p></td>
+                    <td align="center"><input type='text' name='name' class="field"></td><br/>
+                </tr>
+                <tr>
+                    <td><p class="texto16"> TIPO DE CUENTA: </p></td>
+                    <td align="center"><input type='text' name='type' class="field"></td><br/>
+                </tr>
+                <tr>
+                    <td><p class="texto16"> SALDO: </p></td>
+                    <td align="center"><input type='text' name='balance' class="field"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type='submit' name='bCapture' value='Capturar datos' class="button">
+                        <input type='submit' name='bConsult' value='Consultar clientes' class="button">
+                        <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
+                        <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
+                    </td>
+                </tr>
+                            
+            </form>
+        </table>
+	</center></body>
 </html>
 <%
     }

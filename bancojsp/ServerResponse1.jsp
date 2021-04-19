@@ -2,7 +2,7 @@
     String data = request.getParameter("data");
 %>
 <html>
-  <head><title>WEB Server Tomcat</title>
+  <head><title>Bank JSP</title>
     <style>
         body {background-color: #242582;}
     </style>

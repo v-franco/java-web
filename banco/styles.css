@@ -24,10 +24,14 @@
 
 .button{
 	color:floralwhite;
-	background:blue;
+	background:dodgerblue;
 	width: 250px;
 	height:40px;
 	font-size:16pt;
 	font-weight:bold;
 	border-radius:7px;
 }
+
+.myTable { background-color:#eee;border-collapse:collapse; }
+.myTable th { background-color:#000;color:white;width:50%; }
+.myTable td, .myTable th { padding:5px;border:1px solid #000; }

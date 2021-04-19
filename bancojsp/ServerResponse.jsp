@@ -2,16 +2,33 @@
     String data = request.getParameter("data");
 %>
 <html>
-  <head><title>Bank JSP</title>
-    <style>
-        body {background-color: dodgerblue;}
-    </style>
-  </head>
-    <body>
-        <h1>Bank DB:</h1><p>
-        <hr>
-        <table border=1>
-            <%= data %>
-        </table>
-    </body>
+    <link rel="stylesheet" type="text/css" href="styles.css">       
+    <head><title>Bank JSP</title>
+        <style>
+            body {background-color: #242582;}
+            table {
+            border: 3px solid black;
+            border-collapse: collapse;
+            background-color: lightslategrey;
+
+            }
+
+            th, td {
+            border: 3px solid black;  
+            border-collapse: collapse;
+            text-align: center;
+            padding: 8px;
+
+            }
+
+            tr:nth-child(even){background-color: steelblue;}
+        </style>
+    </head>
+        <body><center> 
+            <h1 class="title">Bank DB:</h1><p>
+            <hr>
+            <table class="texto16">
+                <%= data %>
+            </table>
+        </center></body>
 </html>

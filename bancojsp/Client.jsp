@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>JSP Bank</title>
     <style>
-        body {background-color: dodgerblue;}
+        body {background-color: #242582;}
     </style>
 	<body><center>
         <table>
@@ -91,7 +91,7 @@
             //response.sendRedirect("ServerResponse.jsp?data="+data);
 %>
             <jsp:forward page="ServerResponse.jsp">
-                <jsp:param name="data" value="<%= data %>" />
+                <jsp:param name="data" value="<%= data %>"/>
             </jsp:forward> 
 <%
         }

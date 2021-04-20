@@ -87,6 +87,58 @@ public class BancoADjdbc{
             trClient = statement.executeQuery(query);
             clientedp = new ClienteDP();
 
+            //data = "[";
+            while(trClient.next()){
+               clientedp.setNocta(trClient.getString(1));
+               clientedp.setName(trClient.getString(2));
+               clientedp.setType(trClient.getString(3));
+               clientedp.setBalance(trClient.getInt(4));
+
+               //data = data + clientedp.toString() + "\n";
+               data = data + clientedp.toStringHTML();
+               //data = data + clientedp.toStringJSON()+","; 
+               //data = data + JsonWriter.objectToJson(clientedp)+",";
+            }
+            //data = data + "]";
+            //data = data.substring(0,data.length()-1) + "]";
+            //Close file or DB
+            statement.close();
+            System.out.println(query);
+
+            //archiveIn.close();
+        }
+        catch(SQLException sqle){
+            data = "Error, cannot open database, or insert values";
+            System.out.println("Error, cannot open database: "+sqle);
+         }
+         //IOException only used when reading from files, not DB
+        // catch(IOException ioe){
+        //     data = "Error, cannot close file";
+        //     System.out.println("Error: "+ioe);
+        // }
+        return data;
+    }
+
+    public String consultDataJson(){
+        String data="";
+        String client, query, ncta, name, type;
+        int balance;
+        ResultSet trClient;
+        query = "SELECT * FROM Cliente";
+        try{
+            //Open file or DB
+            //archiveIn = new BufferedReader(new FileReader("Clientes.txt"));
+            statement = conexion.createStatement();
+
+            //Process file or DB for data display 
+            // while(archiveIn.ready()){
+            //     client=archiveIn.readLine();
+            //     System.out.println(client);
+            //     data=data+client+"\n";
+            // }
+            trClient = statement.executeQuery(query);
+            clientedp = new ClienteDP();
+
             data = "[";
             while(trClient.next()){
                clientedp.setNocta(trClient.getString(1));
@@ -175,6 +227,51 @@ public class BancoADjdbc{
         return data;
     } 
 
+    public String consultTypeJson(String tcta){
+        String data="", client, ncta, name, type, query, balance;
+        StringTokenizer stClient;
+        ResultSet trClient;
+        boolean found = false;
+
+        query = "SELECT * FROM Cliente WHERE tipo='"+tcta+"'";
+
+        try{
+            //archiveIn = new BufferedReader(new FileReader("Clientes.txt"));
+            statement = conexion.createStatement();
+            trClient = statement.executeQuery(query);
+            clientedp = new ClienteDP();
+
+            data = "[";
+            while(trClient.next()){
+               clientedp.setNocta(trClient.getString(1));
+               clientedp.setName(trClient.getString(2));
+               clientedp.setType(trClient.getString(3));
+               clientedp.setBalance(trClient.getInt(4));
+
+               //data = data + clientedp.toString() + "\n";
+               //data = data + clientedp.toStringHTML();
+               data = data + JsonWriter.objectToJson(clientedp)+",";
+               found = true;
+            }
+            if(!found){
+                data = "Account type not found";
+            }
+            if (found) {
+                data = data.substring(0,data.length()-1) + "]";
+            }
+                
+            // }
+            statement.close();
+            System.out.println(query);
+            // archiveIn.close();
+        }
+        catch(SQLException sqle){
+            data = "Error, cannot open database, or insert values";
+            System.out.println("Error, cannot open database: "+sqle);
+        }
+        return data;
+    } 
+
     public String consultNcta(String nocta){
         String data="", client, ncta, name, type, balance, query;
         StringTokenizer stClient;
@@ -228,4 +325,47 @@ public class BancoADjdbc{
         }
         return data;
     }
+
+    public String consultNctaJson(String nocta){
+        String data="", client, ncta, name, type, balance, query;
+        StringTokenizer stClient;
+        ResultSet trClient;
+        boolean found = false;
+
+        query = "SELECT * FROM Cliente WHERE nocta='"+nocta+"'";
+
+        try{
+            // archiveIn = new BufferedReader(new FileReader("Clientes.txt"));
+            statement = conexion.createStatement();
+            trClient = statement.executeQuery(query);
+            clientedp = new ClienteDP();
+
+            data = "[";
+            while(trClient.next()){
+               clientedp.setNocta(trClient.getString(1));
+               clientedp.setName(trClient.getString(2));
+               clientedp.setType(trClient.getString(3));
+               clientedp.setBalance(trClient.getInt(4));
+
+               //data = data + clientedp.toString() + "\n";
+               //data = data + clientedp.toStringHTML();
+               data = data + JsonWriter.objectToJson(clientedp)+",";
+               found = true;
+            }
+            if(!found){
+                data = "Account not found";
+            }
+            if (found) {
+                data = data.substring(0,data.length()-1) + "]";
+            }
+            // }
+            statement.close();
+            System.out.println(query);
+        }
+        catch(SQLException sqle){
+            data = "Error, cannot open database, or insert values";
+            System.out.println("Error, cannot open database: "+sqle);
+        }
+        return data;
+    }   
 }

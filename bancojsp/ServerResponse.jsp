@@ -1,34 +1,37 @@
 <%
     String data = request.getParameter("data");
 %>
-<html>
-    <link rel="stylesheet" type="text/css" href="styles.css">       
+<html> 
     <head><title>Bank JSP</title>
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">      
         <style>
-            body {background-color: #242582;}
-            table {
-            border: 3px solid black;
-            border-collapse: collapse;
-            background-color: lightslategrey;
+            body {background-color: #262a33;}
+            table.beta {
+                font-weight:bold;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                border: 3px solid black;
+                border-collapse: collapse;
+                background-color: rgb(182, 194, 206);
 
-            }
+                }
 
-            th, td {
-            border: 3px solid black;  
-            border-collapse: collapse;
-            text-align: center;
-            padding: 8px;
+            table.beta  th, td {
+                border: 3px solid black;  
+                border-collapse: collapse;
+                text-align: center;
+                padding: 8px;
 
-            }
+                }
 
-            tr:nth-child(even){background-color: steelblue;}
+            table.beta tr:nth-child(even){background-color: #43ffaf;}
         </style>
     </head>
         <body><center> 
             <h1 class="title">Bank DB:</h1><p>
             <hr>
-            <table class="texto16">
-                <%= data %>
+            <table class="beta">
+                <p class="texto16"><%= data %></p>
             </table>
         </center></body>
 </html>

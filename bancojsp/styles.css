@@ -15,23 +15,52 @@
 }
 
 .field{
-	color:black;
-	background:floralwhite;
-	font-size:14pt;
-	font-weight:bold;
-	border-radius:7px;
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius:7px;
+    border:  2px solid;
+    border-color:#43ffaf;
+    color: white;
+    font-family: "Segoe UI";
+    background: #262a33;
 }
 
+
 .button{
-	color:floralwhite;
-	background:dodgerblue;
+	color:#43ffaf;
+	background: #1b1d24;
 	width: 250px;
 	height:40px;
 	font-size:16pt;
 	font-weight:bold;
 	border-radius:7px;
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
-.myTable { background-color:#eee;border-collapse:collapse; }
-.myTable th { background-color:#000;color:white;width:50%; }
-.myTable td, .myTable th { padding:5px;border:1px solid #000; }
+.button:hover {
+    background-color: #43ffaf;
+    color: #262a33;
+}
+
+.buttonJson{
+	color: #43ffaf;
+	background: #1b1d24;
+	width: 320px;
+	height:40px;
+	font-size:16pt;
+	font-weight:bold;
+	border-radius:7px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.buttonJson:hover {
+    background-color: #43ffaf;
+    color: #262a33;
+}
+
+
+

@@ -1,0 +1,152 @@
+
+<script language=javascript>
+
+	var xhr;
+	
+	
+	function obtenerResultadoJson()
+	{	
+		var libros;
+		var datos="";
+		
+		if(xhr.readyState == 4)
+		{
+			//document.getElementById("transaccion").innerHTML = xhr.responseText;
+			
+			clientes = eval("("+xhr.responseText+")");
+			//clientes = JSON.parse(xhr.responseText);
+			
+			document.getElementById("transaccion").innerHTML = xhr.responseText;
+			//document.getElementById("transaccion").innerHTML = clientes;
+			
+			/*datos = "<table border=1>";
+			for(i=0; i<clientes.length; i++)
+			{
+				//datos = datos + clientes[i].nocta+"   "+clientes[i].nombre+"   "+clientes[i].nombre+"   "+clientes[i].saldo+"<br/>";
+				datos = datos +"<tr><td>"+clientes[i].nocta+"</td><td>"+clientes[i].nombre+"</td><td>"+clientes[i].nombre+"</td><td>"+clientes[i].saldo+"</td></tr>";
+			}
+			datos = datos + "</table>";
+			
+			document.getElementById("transaccion").innerHTML = datos;
+			*/
+		}
+	}
+	
+	function establecerConexionConsultar(urlString)
+	{
+		xhr.open("get",urlString,true);
+		//xhr.onreadystatechange=obtenerResultado;
+		xhr.onreadystatechange=obtenerResultadoJson;
+		xhr.send(null);
+	}
+	
+	function obtenerResultado()
+	{	
+		if(xhr.readyState == 4)
+		{
+			document.getElementById("transaccion").innerHTML = xhr.responseText;
+		}
+	}
+	
+	function establecerConexion(urlString)
+	{
+		xhr.open("get",urlString,true);
+		xhr.onreadystatechange=obtenerResultado;
+		xhr.send(null);
+	}
+	
+	function consultarTipo()
+	{
+		// 1. Obtener el valor del Tipo de Cuenta del TextField correspondiente
+		var tcta = document.getElementById("type").value;
+		
+		// 2. Preparar el URL String
+		var urlString = "../bancojsp/Client.jsp?bConsultTypeJson=consultar&type="+tcta;
+		
+		// 3. Crear el objeto de conexion
+		xhr = new XMLHttpRequest();
+		
+		// 4. Establecer conexion y ejecutar transaccion
+		establecerConexion(urlString);
+	}
+	
+	function consultar()
+	{
+		
+		// 1. Preparar el URL String
+		var urlString = "../bancojsp/Client.jsp?bConsultJson=consultar";
+		
+		// 1. Crear el objeto de conexion
+		xhr = new XMLHttpRequest();
+		
+		// 3. Establecer conexion y ejecutar transaccion
+		establecerConexionConsultar(urlString);
+	}
+
+</script>
+
+<html>
+    <head>
+        <meta http-equiv=”Content-Type” content=”text/html charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>JSP Bank</title>
+        <style>
+            body {background-color: #262a33;}
+            table.alpha {
+                    border: 0px;
+                    border-collapse: collapse;      
+                    }
+
+                table.alpha  th, td {
+                    border: 0px; 
+                    border-collapse: collapse;
+                    text-align: center;
+                    padding: 8px;
+
+                    }
+        </style>
+    </head>
+	<body><center>
+		
+		<!--<form action='../cgi-bin/ClienteController.py' method='get'>-->
+		<!--<form action='../banco/banco' method='get'>-->
+        <table class="alpha">
+            <h2 class="title">JSP Bank</h2>
+            <form action='../bancojsp/Client.jsp' method='get'>
+                <tr>   
+                    <td><p class="texto16"> CUENTA: </p></td>
+                    <td align="center"><input type='text' name='nocta' id='nocta'  value=""></td><br/>
+                </tr>
+                <tr>
+                    <td><p class="texto16"> NOMBRE: </p></td>
+                    <td align="center"><input type='text' name='name'id='name' value=''></td><br/>
+                </tr>
+                <tr>   
+                    <td><p class="texto16"> TIPO DE CUENTA: </p></td>
+                    <td align="center"><input type='text' name='type'  id='type'   value=""></td><br/>
+                </tr>
+                <tr>
+                    <td><p class="texto16"> SALDO: </p></td>
+                    <td align="center"><input type='text' name='balance' id='balance'  value=''></td><br/><br/>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type='submit' name='bCapture' value='Capturar datos' class="button">
+                        <input type='submit' name='bConsult' value='Consultar clientes' class="button">
+                        <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
+                        <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type='button' name='bConsultarJson'     id='bConsultarJson'     value='Consultar Clientes JSON'   class="buttonJson" onclick='consultar()'>
+                        <input type='button' name='bConsultarTipoJson' id='bConsultarTipoJson' value='Consultar Tipo Cuenta JSON' class="buttonJson" onclick='consultarTipo()'>
+                    </td>
+                </tr>               
+                                
+            </form>
+        </table>
+		<br/><br/>
+        <p class="texto16"> Transacción: </p><div id='transaccion'></div>
+    </center></body>
+</html>

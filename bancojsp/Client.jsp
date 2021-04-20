@@ -7,46 +7,60 @@
 <jsp:setProperty name="clientdp" property="*"/>
 
 <%
-    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultNocta") == null && request.getParameter("bConsultType") == null) {
+    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultNocta") == null && request.getParameter("bConsultType") == null && request.getParameter("bConsultJson") == null & request.getParameter("bConsultNoctaJson") == null & request.getParameter("bConsultTypeJson") == null) {
 %>
 <html>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>JSP Bank</title>
     <style>
-        body {background-color: #242582;}
+        body {background-color: #262a33;} 
+
     </style>
 	<body><center>
-        <table>
+        
+            <br>
             <h2 class="title">JSP Bank</h2>
             <form action='../bancojsp/Client.jsp' method='get'>
+                <table style="width: 50%">
             <!--<form action='../basicos/ServletBanco' method='get'>-->
-                <tr>
-                    <td><p class="texto16"> CUENTA: </p></td>
-                    <td align="center"><input type='text' name='nocta' class="field"></td><br/>
-                </tr>
-                <tr>
-                    <td><p class="texto16"> NOMBRE: </p></td>
-                    <td align="center"><input type='text' name='name' class="field"></td><br/>
-                </tr>
-                <tr>
-                    <td><p class="texto16"> TIPO DE CUENTA: </p></td>
-                    <td align="center"><input type='text' name='type' class="field"></td><br/>
-                </tr>
-                <tr>
-                    <td><p class="texto16"> SALDO: </p></td>
-                    <td align="center"><input type='text' name='balance' class="field"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type='submit' name='bCapture' value='Capturar datos' class="button">
-                        <input type='submit' name='bConsult' value='Consultar clientes' class="button">
-                        <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
-                        <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
-                    </td>
-                </tr>
-                            
+                    <tr>
+                        <td><p class="texto16 text-end"> CUENTA: </p></td>
+                        <td align="center"><input type='text' name='nocta' class="field" placeholder="CUENTA"></td><br/>
+                    </tr>
+                    <tr>
+                        <td><p class="texto16 text-end"> NOMBRE: </p></td>
+                        <td align="center"><input type='text' name='name' class="field" placeholder="NOMBRE"></td><br/>
+                    </tr>
+                    <tr>
+                        <td><p class="texto16 text-end"> TIPO DE CUENTA: </p></td>
+                        <td align="center"><input type='text' name='type' class="field" placeholder="TIPO DE CUENTA"></td><br/>
+                    </tr>
+                    <tr>
+                        <td><p class="texto16 text-end"> SALDO: </p></td>
+                        <td align="center"><input type='text' name='balance' class="field" placeholder="SALDO"></td>
+                    </tr>
+                </table>
+                <table>  
+                    <tr>
+                        <td colspan="2" align="center">
+                            <br><br><br><br>
+                            <input type='submit' name='bCapture' value='Capturar datos' class="button">
+                            <input type='submit' name='bConsult' value='Consultar clientes' class="button">
+                            <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
+                            <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type='submit' name='bConsultJson' value='Consultar clientes JSON' class="buttonJson">
+                            <input type='submit' name='bConsultNoctaJson' value='Consultar No Cuenta JSON' class="buttonJson">
+                            <input type='submit' name='bConsultTypeJson' value='Consultar Tipo Cuenta JSON' class="buttonJson">
+                        </td>
+                    </tr>
+                </table>      
             </form>
-        </table>
+       
 	</center></body>
 </html>
 <%
@@ -77,6 +91,20 @@
             data = bank.consultData();
 
             //response.sendRedirect("ServerResponse.jsp?data="+data);
+            //serverResponse(response, data);
+%>
+            <jsp:forward page="ServerResponse.jsp">
+                <jsp:param name="data" value="<%= data %>"/>
+            </jsp:forward> 
+<%
+        }
+
+        if(request.getParameter("bConsultJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+
+            data = bank.consultDataJson();
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
             serverResponse(response, data);
         }
 
@@ -89,11 +117,21 @@
             data = bank.consultNcta(ncta);
 
             //response.sendRedirect("ServerResponse.jsp?data="+data);
+            //serverResponse(response, data);
 %>
             <jsp:forward page="ServerResponse.jsp">
                 <jsp:param name="data" value="<%= data %>"/>
             </jsp:forward> 
 <%
+        }
+
+        if(request.getParameter("bConsultNoctaJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+            String ncta = clientdp.getNocta();
+            data = bank.consultNctaJson(ncta);
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
+            serverResponse(response, data);
         }
 
         if(request.getParameter("bConsultType") != null){
@@ -110,6 +148,15 @@
                 <jsp:param name="data" value="<%= data %>" />
             </jsp:forward> 
  <%           
+        }
+
+        if(request.getParameter("bConsultTypeJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+            String tcta = clientdp.getType();
+            data = bank.consultTypeJson(tcta);
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
+            serverResponse(response, data);
         }
     }
 %>

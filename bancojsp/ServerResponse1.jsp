@@ -4,7 +4,7 @@
 <html>
   <head><title>Bank JSP</title>
     <style>
-        body {background-color: #242582;}
+        body {background-color: #262a33;}
     </style>
   </head>
     <body>

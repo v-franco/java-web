@@ -88,64 +88,58 @@
 <html>
     <head>
         <meta http-equiv=”Content-Type” content=”text/html charset="UTF-8" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <title>JSP Bank</title>
         <style>
-            body {background-color: #262a33;}
-            table.alpha {
-                    border: 0px;
-                    border-collapse: collapse;      
-                    }
+            body {background-color: #565d6d;}
 
-                table.alpha  th, td {
-                    border: 0px; 
-                    border-collapse: collapse;
-                    text-align: center;
-                    padding: 8px;
-
-                    }
         </style>
     </head>
 	<body><center>
 		
 		<!--<form action='../cgi-bin/ClienteController.py' method='get'>-->
 		<!--<form action='../banco/banco' method='get'>-->
-        <table class="alpha">
+            <br>
             <h2 class="title">JSP Bank</h2>
             <form action='../bancojsp/Client.jsp' method='get'>
-                <tr>   
-                    <td><p class="texto16"> CUENTA: </p></td>
-                    <td align="center"><input type='text' name='nocta' id='nocta'  value=""></td><br/>
-                </tr>
-                <tr>
-                    <td><p class="texto16"> NOMBRE: </p></td>
-                    <td align="center"><input type='text' name='name'id='name' value=''></td><br/>
-                </tr>
-                <tr>   
-                    <td><p class="texto16"> TIPO DE CUENTA: </p></td>
-                    <td align="center"><input type='text' name='type'  id='type'   value=""></td><br/>
-                </tr>
-                <tr>
-                    <td><p class="texto16"> SALDO: </p></td>
-                    <td align="center"><input type='text' name='balance' id='balance'  value=''></td><br/><br/>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type='submit' name='bCapture' value='Capturar datos' class="button">
-                        <input type='submit' name='bConsult' value='Consultar clientes' class="button">
-                        <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
-                        <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type='button' name='bConsultarJson'     id='bConsultarJson'     value='Consultar Clientes JSON'   class="buttonJson" onclick='consultar()'>
-                        <input type='button' name='bConsultarTipoJson' id='bConsultarTipoJson' value='Consultar Tipo Cuenta JSON' class="buttonJson" onclick='consultarTipo()'>
-                    </td>
-                </tr>               
-                                
+                <table style="width: 50%">
+                    <tr>   
+                        <td><p class="texto16 text-end"> CUENTA: </p></td>
+                        <td align="center"><input type='text' name='nocta' class="field" id='nocta'  value=""></td><br/>
+                    </tr>
+                    <tr>
+                        <td><p class="texto16 text-end"> NOMBRE: </p></td>
+                        <td align="center"><input type='text' name='name' class="field" id='name' value=''></td><br/>
+                    </tr>
+                    <tr>   
+                        <td><p class="texto16 text-end"> TIPO DE CUENTA: </p></td>
+                        <td align="center"><input type='text' name='type' class="field"  id='type'   value=""></td><br/>
+                    </tr>
+                    <tr>
+                        <td><p class="texto16 text-end"> SALDO: </p></td>
+                        <td align="center"><input type='text' name='balance' class="field" id='balance'  value=''></td><br/><br/>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <br><br><br><br>
+                            <input type='submit' name='bCapture' value='Capturar datos' class="button">
+                            <input type='submit' name='bConsult' value='Consultar clientes' class="button">
+                            <input type='submit' name='bConsultNocta' value='Consultar No Cuenta' class="button">
+                            <input type='submit' name='bConsultType' value='Consultar Tipo Cuenta' class="button">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type='button' name='bConsultarJson'     id='bConsultarJson'     value='Consultar Clientes JSON'   class="buttonJson" onclick='consultar()'>
+                            <input type='button' name='bConsultarTipoJson' id='bConsultarTipoJson' value='Consultar Tipo Cuenta JSON' class="buttonJson" onclick='consultarTipo()'>
+                        </td>
+                    </tr>               
+                </table>                 
             </form>
-        </table>
+        
 		<br/><br/>
         <p class="texto16"> Transacción: </p><div id='transaccion'></div>
     </center></body>

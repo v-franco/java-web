@@ -113,6 +113,57 @@ public class BiblioADjdbc
             {
                 datos = datos + archivoIn.readLine() + "\n";
             }*/
+            //datos = "[";
+            while(tr.next())
+            {
+            	//datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
+            	librodp.setTitulo(tr.getString("titulo"));
+            	librodp.setAutor(tr.getString(2));
+            	librodp.setEditorial(tr.getString("editorial"));
+            	
+            	//datos = datos + librodp.toString() + "\n";
+                datos = datos + librodp.toStringHTML();
+                //datos = datos + JsonWriter.objectToJson(librodp)+",";
+            }
+            //datos = datos.substring(0,datos.length()-1) + "]";
+            // 3. Cerrar el archivo
+            //archivoIn.close();
+            statement.close();
+            
+            System.out.println(query);
+        }
+        catch(SQLException ioe)
+        {
+            datos = "Error en consultar: "+ioe;
+            System.out.println("Error: "+ioe);
+        }
+        
+        return datos;
+    }
+
+    public String consultarLibrosJson()
+    {
+        String datos="";
+        ResultSet tr;
+        
+        String query = "SELECT * FROM Libro";
+        
+        librodp = new LibroDP();
+        
+        try
+        {
+            // 1. Abrir el archivo para leer los datos
+            //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+        	statement = conexion.createStatement();
+        	
+        	// Ejecutar Query
+        	tr = statement.executeQuery(query);
+        	
+            // 2. Procesar los datos
+            /*while(archivoIn.ready())
+            {
+                datos = datos + archivoIn.readLine() + "\n";
+            }*/
             datos = "[";
             while(tr.next())
             {
@@ -195,6 +246,66 @@ public class BiblioADjdbc
         
         return datos;
     }
+
+    public String consultarEditorialJson(String edit)
+    {
+        String datos="";
+        ResultSet tr;
+        boolean encontrado=false;
+        
+        String query = "SELECT * FROM Libro WHERE editorial='"+edit+"'";
+        
+        librodp = new LibroDP();
+        
+        try
+        {
+            // 1. Abrir el archivo para leer los datos
+            //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+            statement = conexion.createStatement();
+            
+            // Ejecutar Query
+            tr = statement.executeQuery(query);
+            
+            // 2. Procesar los datos
+            /*while(archivoIn.ready())
+             {
+             datos = datos + archivoIn.readLine() + "\n";
+             }*/
+            datos = "[";
+            while(tr.next())
+            {
+                //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
+                librodp.setTitulo(tr.getString("titulo"));
+                librodp.setAutor(tr.getString(2));
+                librodp.setEditorial(tr.getString("editorial"));
+                
+                //datos = datos + librodp.toString() + "\n";
+                //datos = datos + librodp.toStringHTML();
+                datos = datos + JsonWriter.objectToJson(librodp)+",";
+
+                encontrado = true;
+            }
+            
+            // 3. Cerrar el archivo
+            //archivoIn.close();
+            statement.close();
+            
+            if(!encontrado){
+                datos = "NOT_FOUND";
+            }
+            if (encontrado) {
+                datos = datos.substring(0,datos.length()-1) + "]";
+            }
+            System.out.println(query);
+        }
+        catch(SQLException ioe)
+        {
+            datos = "Error en consultar: "+ioe;
+            System.out.println("Error: "+ioe);
+        }
+        
+        return datos;
+    }
     
     public String consultarTitulo(String tit)
     {
@@ -240,6 +351,67 @@ public class BiblioADjdbc
             
             if(!encontrado)
                 datos = "NOT_FOUND";
+            
+            System.out.println(query);
+        }
+        catch(SQLException ioe)
+        {
+            datos = "Error en consultar: "+ioe;
+            System.out.println("Error: "+ioe);
+        }
+        
+        return datos;
+    }
+
+    public String consultarTituloJson(String tit)
+    {
+        String datos="";
+        ResultSet tr;
+        boolean encontrado=false;
+        
+        String query = "SELECT * FROM Libro WHERE titulo='"+tit+"'";
+        
+        librodp = new LibroDP();
+        
+        try
+        {
+            // 1. Abrir el archivo para leer los datos
+            //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
+            statement = conexion.createStatement();
+            
+            // Ejecutar Query
+            tr = statement.executeQuery(query);
+            
+            // 2. Procesar los datos
+            /*while(archivoIn.ready())
+             {
+             datos = datos + archivoIn.readLine() + "\n";
+             }*/   
+            datos = "[";
+            while(tr.next())
+            {
+                //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
+                librodp.setTitulo(tr.getString("titulo"));
+                librodp.setAutor(tr.getString(2));
+                librodp.setEditorial(tr.getString("editorial"));
+                
+                //datos = datos + librodp.toString() + "\n";
+                //datos = datos + librodp.toStringHTML();
+                datos = datos + JsonWriter.objectToJson(librodp)+",";
+
+                encontrado = true;
+            }
+            
+            // 3. Cerrar el archivo
+            //archivoIn.close();
+            statement.close();
+            
+            if(!encontrado){
+                datos = "NOT_FOUND";
+            }
+            if (encontrado) {
+                datos = datos.substring(0,datos.length()-1) + "]";
+            }
             
             System.out.println(query);
         }

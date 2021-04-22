@@ -7,23 +7,57 @@
 <jsp:setProperty name="librodp" property="*"/>
 
 <%
-    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultEdit") == null && request.getParameter("bConsultTitle") == null) {
+    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultEdit") == null && request.getParameter("bConsultTitle") == null && request.getParameter("bConsultJson") == null && request.getParameter("bConsultEditJson") == null && request.getParameter("bConsultTitleJson") == null) {
 %>
 <html>
-	<head><title>Library with JSP</title></head>
-	<body>
-		<h2>JSP Library</h2>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<head>
+        <title>Library with JSP</title>
+        <style>
+            body {background-color: #262a33;} 
+    
+        </style>
+    </head>
+	<body><center>
+		<h2 class="title">JSP Library</h2>
 		<form action='../librojsp/Library.jsp' method='get'>
+            <table style="width: 50%">
 		<!--<form action='../basicos/ServletBanco' method='get'>-->
-        	TITULO:    <input type='text' name='titulo' value=''><br/>
-        	AUTOR:     <input type='text' name='autor' value=''><br/>
-        	EDITORIAL: <input type='text' name='editorial' value=''><br/>
-        			   <input type='submit' name='bCapture' value='Capturar Datos'>
-        			   <input type='submit' name='bConsult' value='Consultar Libros'>
-        			   <input type='submit' name='bConsultEdit' value='Consultar Editorial'>
-        			   <input type='submit' name='bConsultTitle' value='Consultar Titulo'>
+            <tr>
+        	    <td><p class="texto16 text-end"> TITULO: </p></td>
+                <td align="center"><input type='text' name='titulo' value='' class="field"></td><br/>
+            </tr>
+            <tr>
+                <td><p class="texto16 text-end"> AUTOR: </p></td>
+                <td align="center"><input type='text' name='autor' value='' class="field"></td><br/>
+            </tr>
+            <tr>
+                <td><p class="texto16 text-end"> EDITORIAL: </p></td>
+                <td align="center"><input type='text' name='editorial' value='' class="field"></td><br/>
+            </tr>
+            </table>
+            <table>
+                <tr>
+                    <td colspan="2" align="center">
+                        <br><br><br><br>
+                        <input type='submit' name='bCapture' value='Capturar Datos' class="button">
+        			    <input type='submit' name='bConsult' value='Consultar Libros' class="button">
+        			    <input type='submit' name='bConsultEdit' value='Consultar Editorial' class="button">
+        			    <input type='submit' name='bConsultTitle' value='Consultar Titulo' class="button">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type='submit' name='bConsultJson' value='Consultar general JSON' class="buttonJson">
+                        <input type='submit' name='bConsultEditJson' value='Consultar editorial JSON' class="buttonJson">
+                        <input type='submit' name='bConsultTitleJson' value='Consultar Titulo JSON' class="buttonJson">
+                    </td>
+                </tr>
+            </table>
+        			   
 		</form>
-	</body>
+	</center></body>
 </html>
 <%
     }
@@ -53,6 +87,20 @@
             data = library.consultarLibros();
 
             //response.sendRedirect("ServerResponse.jsp?data="+data);
+            //serverResponse(response, data);
+%>
+            <jsp:forward page="ServerResponse.jsp">
+                <jsp:param name="data" value="<%= data %>" />
+            </jsp:forward> 
+<%
+        }
+
+        if(request.getParameter("bConsultJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+
+            data = library.consultarLibrosJson();
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
             serverResponse(response, data);
         }
 
@@ -72,6 +120,17 @@
 <%
         }
 
+        if(request.getParameter("bConsultEditJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+            String editorial = librodp.getEditorial();
+
+            data = library.consultarEditorialJson(editorial);
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
+            serverResponse(response, data);
+        }
+        
+
         if(request.getParameter("bConsultTitle") != null){
             //response.sendRedirect("ServerResponse.jsp?data=Consultar type");
 
@@ -86,6 +145,16 @@
                 <jsp:param name="data" value="<%= data %>" />
             </jsp:forward> 
  <%           
+        }
+
+        if(request.getParameter("bConsultTitleJson") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");
+            String titulo = librodp.getTitulo();
+
+            data = library.consultarTituloJson(titulo);
+
+            //response.sendRedirect("ServerResponse.jsp?data="+data);
+            serverResponse(response, data);
         }
     }
 %>

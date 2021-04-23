@@ -3,6 +3,66 @@
 
 	var xhr;
 	
+    function obtenerDatos()
+	{
+		var datos="";
+		
+		var titulo = document.getElementById("titulo").value;
+		var autor  = document.getElementById("autor").value;
+		var edit   = document.getElementById("editorial").value;
+		
+		if(titulo == "" || autor == "" || edit == "")
+			datos = "VACIO";
+		else
+			datos = "titulo="+titulo+"&autor="+autor+"&editorial="+edit;
+		
+		return datos;
+	}
+
+    function capturarDatos()
+	{
+		var datos="";
+		var urlString="";
+		
+		// 1. Obtener los datos de los textfields del form html
+		datos = obtenerDatos();
+		
+		// 2. Checar los datos del usuario
+		if(datos == "VACIO")
+		{
+			alert("Algun campo esta vacio...");
+			document.getElementById("transaccion").innerHTML ="Algun campo esta vacio...";
+		}
+		else
+		{
+			//alert(datos);
+			//document.getElementById("transaccion").innerHTML = datos;
+			
+			// 2.1 Preparar el URL String
+			urlString = "../librojsp/Library.jsp?bCapture=capturar&"+datos;
+			
+			// 2.2 Crear el objeto XMLHttpRequest
+			xhr = new XMLHttpRequest();
+			
+			// 2.3 Establecer la conexion con el Server Http
+			establecerConexionAjax(urlString);
+		}	
+	}
+
+    function establecerConexionAjax(urlString)
+	{
+		xhr.open("get",urlString,true);
+		xhr.onreadystatechange=obtenerResultadoAjax;
+		xhr.send(null);
+	}
+
+    function obtenerResultadoAjax()
+	{	
+		if(xhr.readyState == 4)
+		{
+			document.getElementById("transaccion").innerHTML = xhr.responseText;
+		}
+	}
 	
 	function obtenerResultadoJson()
 	{	
@@ -13,24 +73,26 @@
 		{
 			//document.getElementById("transaccion").innerHTML = xhr.responseText;
 			
-			clientes = eval("("+xhr.responseText+")");
-			//clientes = JSON.parse(xhr.responseText);
+			//clientes = eval("("+xhr.responseText+")");
+			clientes = JSON.parse(xhr.responseText);
 			
-			document.getElementById("transaccion").innerHTML = xhr.responseText;
+			//document.getElementById("transaccion").innerHTML = xhr.responseText;
 			//document.getElementById("transaccion").innerHTML = clientes;
 			
-			/*datos = "<table border=1>";
+			datos = "<table border=1>";
 			for(i=0; i<clientes.length; i++)
 			{
 				//datos = datos + clientes[i].nocta+"   "+clientes[i].nombre+"   "+clientes[i].nombre+"   "+clientes[i].saldo+"<br/>";
-				datos = datos +"<tr><td>"+clientes[i].nocta+"</td><td>"+clientes[i].nombre+"</td><td>"+clientes[i].nombre+"</td><td>"+clientes[i].saldo+"</td></tr>";
+				datos = datos +"<tr><td>"+clientes[i].titulo+"</td><td>"+clientes[i].autor+"</td><td>"+clientes[i].editorial+"</td></tr>";
 			}
 			datos = datos + "</table>";
 			
 			document.getElementById("transaccion").innerHTML = datos;
-			*/
+			
 		}
 	}
+
+    
 	
 	function establecerConexionConsultar(urlString)
 	{
@@ -58,16 +120,89 @@
 	function consultarTipo()
 	{
 		// 1. Obtener el valor del Tipo de Cuenta del TextField correspondiente
-		var tcta = document.getElementById("editorial").value;
+		var edit = document.getElementById("editorial").value;
+
+        if(edit == "")
+		{
+			alert("Teclear una Editorial valida...");
+		}
+        else{
+            // 2. Preparar el URL String
+            var urlString = "../librojsp/Library.jsp?bConsultEditJson=consultar&editorial="+edit;
+            
+            // 3. Crear el objeto de conexion
+            xhr = new XMLHttpRequest();
+            
+            // 4. Establecer conexion y ejecutar transaccion
+            establecerConexion(urlString);
+        }
 		
-		// 2. Preparar el URL String
-		var urlString = "../librojsp/Library.jsp?bConsultEditJson=consultar&editorial="+tcta;
+	}
+
+    function consultarTipoAjax()
+	{
+		// 1. Obtener el valor del Tipo de Cuenta del TextField correspondiente
+		var edit = document.getElementById("editorial").value;
+
+        if(edit == "")
+		{
+			alert("Teclear una Editorial valida...");
+		}
+        else{
+            // 2. Preparar el URL String
+            var urlString = "../librojsp/Library.jsp?bConsultEdit=consultar&editorial="+edit;
+            
+            // 3. Crear el objeto de conexion
+            xhr = new XMLHttpRequest();
+            
+            // 4. Establecer conexion y ejecutar transaccion
+            establecerConexion(urlString);
+        }
 		
-		// 3. Crear el objeto de conexion
-		xhr = new XMLHttpRequest();
+	}
+
+    function consultarTit()
+	{
+		// 1. Obtener el valor del Tipo de Cuenta del TextField correspondiente
+		var tit = document.getElementById("titulo").value;
+
+        if(tit == "")
+		{
+			alert("Teclear un titulo valido...");
+		}
+        else{
+            // 2. Preparar el URL String
+            var urlString = "../librojsp/Library.jsp?bConsultTitleJson=consultar&titulo="+tit;
+            
+            // 3. Crear el objeto de conexion
+            xhr = new XMLHttpRequest();
+            
+            // 4. Establecer conexion y ejecutar transaccion
+            establecerConexion(urlString);
+        }
 		
-		// 4. Establecer conexion y ejecutar transaccion
-		establecerConexion(urlString);
+	}
+
+    function consultarTitAjax()
+	{
+		// 1. Obtener el valor del Tipo de Cuenta del TextField correspondiente
+		var tit = document.getElementById("titulo").value;
+
+        if(tit == "")
+		{
+			alert("Teclear un titulo valido...");
+		}
+        else{
+            // 2. Preparar el URL String
+            var urlString = "../librojsp/Library.jsp?bConsultTitle=consultar&titulo="+tit;
+            
+            // 3. Crear el objeto de conexion
+            xhr = new XMLHttpRequest();
+            
+            // 4. Establecer conexion y ejecutar transaccion
+            establecerConexion(urlString);
+        }
+		
 	}
 	
 	function consultar()
@@ -81,6 +216,19 @@
 		
 		// 3. Establecer conexion y ejecutar transaccion
 		establecerConexionConsultar(urlString);
+	}
+
+    function consultarAjax()
+	{
+		
+		// 1. Preparar el URL String
+		var urlString = "../librojsp/Library.jsp?bConsult=consultar";
+		
+		// 1. Crear el objeto de conexion
+		xhr = new XMLHttpRequest();
+		
+		// 3. Establecer conexion y ejecutar transaccion
+		establecerConexion(urlString);
 	}
 
 </script>
@@ -125,12 +273,21 @@
                             <input type='submit' name='bConsult' value='Consultar Libros' class="button">
                             <input type='submit' name='bConsultEdit' value='Consultar Editorial' class="button">
                             <input type='submit' name='bConsultTitle' value='Consultar Titulo' class="button">
+                            
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
+                            <input type='button' name='bConsultarAjax' id="bConsultarAjax" value='Consultar general AJAX' class="buttonJson" onclick='consultarAjax()'>
+                            <input type='button' name='bConsultarEditAjax' id="bConsultarEditAjax" value='Consultar editorial AJAX' class="buttonJson" onclick='consultarTipoAjax()'>
+                            <input type='button' name='bConsultarTitAjax' id="bConsultarTitAjax" value='Consultar titulo AJAX' class="buttonJson" onclick='consultarTitAjax()'>
+                        </td>
+                    </tr>     
+                    <tr>
+                        <td colspan="2" align="center">
                             <input type='button' name='bConsultarJson' id="bConsultarJson" value='Consultar general JSON' class="buttonJson" onclick='consultar()'>
                             <input type='button' name='bConsultarEditJson' id="bConsultarEditJson" value='Consultar editorial JSON' class="buttonJson" onclick='consultarTipo()'>
+                            <input type='button' name='bConsultarTitJson' id="bConsultarTitJson" value='Consultar titulo JSON' class="buttonJson" onclick='consultarTit()'>
                         </td>
                     </tr>               
                 </table>                 

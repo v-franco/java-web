@@ -7,7 +7,9 @@
 <jsp:setProperty name="librodp" property="*"/>
 
 <%
-    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultEdit") == null && request.getParameter("bConsultTitle") == null && request.getParameter("bConsultJson") == null && request.getParameter("bConsultEditJson") == null && request.getParameter("bConsultTitleJson") == null) {
+    if(request.getParameter("bCapture") == null && request.getParameter("bConsult") == null && request.getParameter("bConsultEdit") == null 
+    && request.getParameter("bConsultTitle") == null && request.getParameter("bConsultJson") == null && request.getParameter("bConsultEditJson") == null 
+    && request.getParameter("bConsultTitleJson") == null && request.getParameter("bEditar") == null)  {
 %>
 <html>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -89,7 +91,7 @@
             //response.sendRedirect("ServerResponse.jsp?data="+data);
             //serverResponse(response, data);
 %>
-            <jsp:forward page="ServerResponse.jsp">
+            <jsp:forward page="RespuestaGral2.jsp">
                 <jsp:param name="data" value="<%= data %>" />
             </jsp:forward> 
 <%
@@ -114,7 +116,7 @@
 
             //response.sendRedirect("ServerResponse.jsp?data="+data);
 %>
-            <jsp:forward page="ServerResponse.jsp">
+            <jsp:forward page="RespuestaGral2.jsp">
                 <jsp:param name="data" value="<%= data %>" />
             </jsp:forward> 
 <%
@@ -146,6 +148,33 @@
             </jsp:forward> 
  <%           
         }
+
+        if(request.getParameter("bEditar") != null)
+		{
+		 	//String edit = tfEditorial.getText();
+		 	//String tit  = request.getParameter("titulo");
+            
+            //datos = biblioad.consultarTitulo(tit);
+            
+            //response.sendRedirect("RespuestaGral.jsp?mensaje="+datos);
+            //response.sendRedirect("RespuestaGral1.jsp?mensaje="+datos);
+%>
+			<%--<h2><%= librodp.getTitulo() %></h2>--%>
+			<%--<h2><%= librodp.getAutor() %></h2>--%>
+			<%--<h2><%= librodp.getEditorial() %></h2>--%>
+			
+			<%--<h2><jsp:getProperty name="librodp" property="titulo"/></h2>--%>
+			<%--<h2><jsp:getProperty name="librodp" property="autor"/></h2>--%>
+			<%--<h2><jsp:getProperty name="librodp" property="editorial"/></h2>--%>
+			
+			<jsp:forward page="Editar.jsp" >
+            	<jsp:param name="titulo"    value="<%= librodp.getTitulo() %>" />
+            	<jsp:param name="autor"     value="<%= librodp.getAutor() %>" />
+            	<jsp:param name="editorial" value="<%= librodp.getEditorial() %>" />
+            </jsp:forward>
+            
+<%
+		}
 
         if(request.getParameter("bConsultTitleJson") != null){
             //response.sendRedirect("ServerResponse.jsp?data=Consultar datos");

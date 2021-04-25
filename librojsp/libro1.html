@@ -204,6 +204,53 @@
         }
 		
 	}
+
+    function establecerConexionJson(urlString)
+	{
+		xhr.open("get",urlString,true);
+		//xhr.onreadystatechange=obtenerResultadoJson;
+		xhr.onreadystatechange=obtenerResultadoJson2;
+		xhr.send(null);
+	}   
+
+    function obtenerResultadoJson2()
+	{	
+		var libros;
+		var datos="";
+		var strHtmlImg;
+		var strRefTit;
+		var strRefImg;
+		var imagen="";
+		
+		if(xhr.readyState == 4)
+		{
+			//document.getElementById("transaccion").innerHTML = xhr.responseText;
+			
+			//libros = eval("("+xhr.responseText+")");
+			libros = JSON.parse(xhr.responseText);
+			
+			//document.getElementById("transaccion").innerHTML = xhr.responseText;
+			//document.getElementById("transaccion").innerHTML = clientes;
+			
+			datos = "<table border=1>";
+			for(i=0; i<libros.length; i++)
+			{
+				imagen = libros[i].titulo + ".jpg"
+				strHtmlImg = "<img src='../librojsp/images/"+imagen+"' width=100 heigth=80>";
+ 				strRefTit  = "<a href='../librojsp/Libro.jsp?bEditar=editar&autor="+libros[i].autor+"&editorial="+libros[i].editorial+"&titulo="+libros[i].titulo+"'>"+libros[i].titulo+"</a>";
+ 				strRefImg  = "<a href='../librojsp/Libro.jsp?bEditar=editar&autor="+libros[i].autor+"&editorial="+libros[i].editorial+"&titulo="+libros[i].titulo+"'>"+strHtmlImg+"</a>";
+
+        		//datos = datos +"<tr><td>"+libros[i].titulo+"</td><td>"+libros[i].autor+"</td><td>"+libros[i].editorial+"</td></tr>";
+        		//datos = datos +"<tr><td>"+libros[i].titulo+"</td><td>"+libros[i].autor+"</td><td>"+libros[i].editorial+"</td><td>"+strHtmlImg+"</td></tr>";
+        		//datos = datos +"<tr><td>"+libros[i].titulo+"</td><td>"+libros[i].autor+"</td><td>"+libros[i].editorial+"</td><td>"+strRefImg+"</td></tr>";
+        		datos = datos +"<tr><td>"+strRefTit+"</td><td>"+libros[i].autor+"</td><td>"+libros[i].editorial+"</td><td>"+strRefImg+"</td></tr>";
+			}
+			datos = datos + "</table>";
+			
+			document.getElementById("transaccion").innerHTML = datos;
+			
+		}
+	}
 	
 	function consultar()
 	{

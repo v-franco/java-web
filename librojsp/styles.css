@@ -14,6 +14,14 @@
     text-align: center;
 }
 
+.texto16alt{
+	color: black;
+	font-size:16pt;
+	font-weight:bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
 .field{
     width: 90%;
     padding: 12px 20px;

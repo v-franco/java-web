@@ -73,6 +73,10 @@ public class LibroDP
         return "<tr><td>"+titulo+"</td><td>"+autor+"</td><td>"+editorial+"</td></tr>";
     }
 
+    public String toStringHtmlImg(){
+        return "<tr><td>"+titulo+"</td><td>"+autor+"</td><td>"+editorial+"</td><td>"+"<img src='../librojsp/images/"+titulo+".jpg' width=100 height=80></img>"+"</td></tr>";
+    }
+
     
     public String toStringJSON(){
         return "{\"titulo\":\""+titulo+"\",\"autor\":\""+autor+"\",\"editorial\":\""+editorial+"\"}";

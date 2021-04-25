@@ -122,7 +122,9 @@ public class BiblioADjdbc
             	librodp.setEditorial(tr.getString("editorial"));
             	
             	//datos = datos + librodp.toString() + "\n";
-                datos = datos + librodp.toStringHTML();
+                //datos = datos + librodp.toStringHTML();
+                //datos = datos + librodp.toStringHtmlImg();
+                datos = datos + librodp.toString() + "*";
                 //datos = datos + JsonWriter.objectToJson(librodp)+",";
             }
             //datos = datos.substring(0,datos.length()-1) + "]";
@@ -224,8 +226,9 @@ public class BiblioADjdbc
                 librodp.setEditorial(tr.getString("editorial"));
                 
                 //datos = datos + librodp.toString() + "\n";
-                datos = datos + librodp.toStringHTML();
-
+                //datos = datos + librodp.toStringHTML();
+                //datos = datos + librodp.toStringHtmlImg();
+                datos = datos + librodp.toString() + "*";
                 encontrado = true;
             }
             
@@ -340,7 +343,8 @@ public class BiblioADjdbc
                 librodp.setEditorial(tr.getString("editorial"));
                 
                 //datos = datos + librodp.toString() + "\n";
-                datos = datos + librodp.toStringHTML();
+                //datos = datos + librodp.toStringHTML();
+                datos = datos + librodp.toStringHtmlImg();
 
                 encontrado = true;
             }

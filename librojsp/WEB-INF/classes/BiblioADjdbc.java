@@ -16,37 +16,30 @@ public class BiblioADjdbc
  
     private LibroDP librodp;
     
-    public BiblioADjdbc()
-    {
-    	try
-    	{
+    public BiblioADjdbc() {
+    	try {
     		Class.forName("com.mysql.jdbc.Driver").newInstance();
     		//Class.forName("com.mysql.jc.jdbc.Driver").newInstance();
     		conexion = DriverManager.getConnection("jdbc:mysql://localhost/biblio?user=root");
     		
     		System.out.println("Conexion exitosa a la BD ...");	
     	}
-    	catch(ClassNotFoundException cnfe)
-    	{
+    	catch(ClassNotFoundException cnfe) {
     		System.out.println("Error Class.forName(): "+cnfe);
     	}
-    	catch(InstantiationException ie)
-    	{
+    	catch(InstantiationException ie) {
     		System.out.println("Error al crear la Instancia: "+ie);
     	}
-    	catch(IllegalAccessException iae)
-    	{
+    	catch(IllegalAccessException iae) {
     		System.out.println("Error IllegalAccess: "+iae);
     	}
-    	catch(SQLException sqle)
-    	{
+    	catch(SQLException sqle) {
     			System.out.println("Error Sql Exception: "+sqle);
     	}
     	
     }
     
-    public String capturar(LibroDP librodp)
-    {
+    public String capturar(LibroDP librodp) {
         String respuesta;
         String strInsert, tit, aut, edit;
         StringTokenizer st;
@@ -63,8 +56,7 @@ public class BiblioADjdbc
         
         strInsert = "INSERT INTO Libro VALUES("+librodp.toStringSql()+")";
         
-        try
-        {
+        try {
             // 1. Abrir el archivo de datos
             //archivoOut = new PrintWriter(new FileWriter("Libros.txt",true));
         	statement = conexion.createStatement();
@@ -81,17 +73,92 @@ public class BiblioADjdbc
             
             System.out.println(strInsert);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             respuesta = "Error en captura: "+ioe;
             System.out.println("Error: "+ioe);
         }
         
         return respuesta;
     }
+
+    public String actualizarLibro(LibroDP librodp) {
+        String respuesta;
+        String strInsert, tit, aut, edit, datos;
+        StringTokenizer st;
+        
+        datos = librodp.toString();
+        
+        st = new StringTokenizer(datos,"_");
+        tit = st.nextToken();
+        aut = st.nextToken();
+        edit = st.nextToken();
+        
+        strInsert = "UPDATE Libro SET titulo='"+tit+"',autor='"+aut+"',editorial='"+edit+"' where titulo='"+tit+"'";
+        
+        try {
+            // 1. Abrir el archivo de datos
+            //archivoOut = new PrintWriter(new FileWriter("Libros.txt",true));
+        	statement = conexion.createStatement();
+        	
+            // 2. Capturar los datos en el archivo
+            //archivoOut.println(datos);
+            statement.executeUpdate(strInsert);
+            
+            // 3. Cerrar archivo
+            //archivoOut.close();
+            statement.close();
+            
+            respuesta = "datos modificados correctamente... ";
+            
+            System.out.println(strInsert);
+        }
+        catch(SQLException ioe) {
+            respuesta = "Error en captura: "+ioe;
+            System.out.println("Error: "+ioe);
+        }
+        
+        return respuesta;
+    }
+
+    public String borrarLibro(LibroDP librodp) {
+        String respuesta;
+        String strInsert, tit, aut, edit, datos;
+        StringTokenizer st;
+        
+        datos = librodp.toString();
+        
+        st = new StringTokenizer(datos,"_");
+        tit = st.nextToken();
+        aut = st.nextToken();
+        edit = st.nextToken();
+        
+        strInsert = "DELETE FROM Libro WHERE titulo='"+tit+"'";
+        
+        try {
+            // 1. Abrir el archivo de datos
+            //archivoOut = new PrintWriter(new FileWriter("Libros.txt",true));
+        	statement = conexion.createStatement();
+        	
+            // 2. Capturar los datos en el archivo
+            //archivoOut.println(datos);
+            statement.executeUpdate(strInsert);
+            
+            // 3. Cerrar archivo
+            //archivoOut.close();
+            statement.close();
+            
+            respuesta = "datos modificados correctamente... ";
+            
+            System.out.println(strInsert);
+        }
+        catch(SQLException ioe) {
+            respuesta = "Error en captura: "+ioe;
+            System.out.println("Error: "+ioe);
+        }
+        return respuesta;
+    }
     
-    public String consultarLibros()
-    {
+    public String consultarLibros() {
         String datos="";
         ResultSet tr;
         
@@ -99,8 +166,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
         	statement = conexion.createStatement();
@@ -114,8 +180,7 @@ public class BiblioADjdbc
                 datos = datos + archivoIn.readLine() + "\n";
             }*/
             //datos = "[";
-            while(tr.next())
-            {
+            while(tr.next()) {
             	//datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
             	librodp.setTitulo(tr.getString("titulo"));
             	librodp.setAutor(tr.getString(2));
@@ -134,8 +199,7 @@ public class BiblioADjdbc
             
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }
@@ -143,8 +207,7 @@ public class BiblioADjdbc
         return datos;
     }
 
-    public String consultarLibrosJson()
-    {
+    public String consultarLibrosJson() {
         String datos="";
         ResultSet tr;
         
@@ -152,8 +215,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
         	statement = conexion.createStatement();
@@ -167,8 +229,7 @@ public class BiblioADjdbc
                 datos = datos + archivoIn.readLine() + "\n";
             }*/
             datos = "[";
-            while(tr.next())
-            {
+            while(tr.next()) {
             	//datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
             	librodp.setTitulo(tr.getString("titulo"));
             	librodp.setAutor(tr.getString(2));
@@ -184,8 +245,7 @@ public class BiblioADjdbc
             
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }
@@ -193,8 +253,7 @@ public class BiblioADjdbc
         return datos;
     }
     
-    public String consultarEditorial(String edit)
-    {
+    public String consultarEditorial(String edit) {
         String datos="";
         ResultSet tr;
         boolean encontrado=false;
@@ -203,8 +262,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
             statement = conexion.createStatement();
@@ -218,8 +276,7 @@ public class BiblioADjdbc
              datos = datos + archivoIn.readLine() + "\n";
              }*/
             
-            while(tr.next())
-            {
+            while(tr.next()) {
                 //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
                 librodp.setTitulo(tr.getString("titulo"));
                 librodp.setAutor(tr.getString(2));
@@ -241,8 +298,7 @@ public class BiblioADjdbc
             
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }
@@ -250,8 +306,7 @@ public class BiblioADjdbc
         return datos;
     }
 
-    public String consultarEditorialJson(String edit)
-    {
+    public String consultarEditorialJson(String edit) {
         String datos="";
         ResultSet tr;
         boolean encontrado=false;
@@ -260,8 +315,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
             statement = conexion.createStatement();
@@ -275,8 +329,7 @@ public class BiblioADjdbc
              datos = datos + archivoIn.readLine() + "\n";
              }*/
             datos = "[";
-            while(tr.next())
-            {
+            while(tr.next()) {
                 //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
                 librodp.setTitulo(tr.getString("titulo"));
                 librodp.setAutor(tr.getString(2));
@@ -293,7 +346,7 @@ public class BiblioADjdbc
             //archivoIn.close();
             statement.close();
             
-            if(!encontrado){
+            if(!encontrado) {
                 datos = "NOT_FOUND";
             }
             if (encontrado) {
@@ -301,8 +354,7 @@ public class BiblioADjdbc
             }
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }
@@ -310,8 +362,7 @@ public class BiblioADjdbc
         return datos;
     }
     
-    public String consultarTitulo(String tit)
-    {
+    public String consultarTitulo(String tit) {
         String datos="";
         ResultSet tr;
         boolean encontrado=false;
@@ -320,8 +371,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
             statement = conexion.createStatement();
@@ -335,8 +385,7 @@ public class BiblioADjdbc
              datos = datos + archivoIn.readLine() + "\n";
              }*/   
             
-            while(tr.next())
-            {
+            while(tr.next()) {
                 //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
                 librodp.setTitulo(tr.getString("titulo"));
                 librodp.setAutor(tr.getString(2));
@@ -353,13 +402,13 @@ public class BiblioADjdbc
             //archivoIn.close();
             statement.close();
             
-            if(!encontrado)
+            if(!encontrado) {
                 datos = "NOT_FOUND";
+            }
             
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }
@@ -367,8 +416,7 @@ public class BiblioADjdbc
         return datos;
     }
 
-    public String consultarTituloJson(String tit)
-    {
+    public String consultarTituloJson(String tit) {
         String datos="";
         ResultSet tr;
         boolean encontrado=false;
@@ -377,8 +425,7 @@ public class BiblioADjdbc
         
         librodp = new LibroDP();
         
-        try
-        {
+        try {
             // 1. Abrir el archivo para leer los datos
             //archivoIn = new BufferedReader(new FileReader("Libros.txt"));
             statement = conexion.createStatement();
@@ -392,8 +439,7 @@ public class BiblioADjdbc
              datos = datos + archivoIn.readLine() + "\n";
              }*/   
             datos = "[";
-            while(tr.next())
-            {
+            while(tr.next()) {
                 //datos = datos + tr.getString("titulo")+"*"+tr.getString(2)+"*"+tr.getString("editorial")+"\n";
                 librodp.setTitulo(tr.getString("titulo"));
                 librodp.setAutor(tr.getString(2));
@@ -419,8 +465,7 @@ public class BiblioADjdbc
             
             System.out.println(query);
         }
-        catch(SQLException ioe)
-        {
+        catch(SQLException ioe) {
             datos = "Error en consultar: "+ioe;
             System.out.println("Error: "+ioe);
         }

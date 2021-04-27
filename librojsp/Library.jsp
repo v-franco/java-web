@@ -185,7 +185,17 @@
             //response.sendRedirect("ServerResponse.jsp?data="+data);
             serverResponse(response, data);
         }
-    }
+
+		if(request.getParameter("bActualizar") != null)
+		{
+			// Actualizar daots del libro
+            data = librodp.toString();
+           	answer = library.actualizarLibro(librodp);
+            
+            // 3. Enviar los datos al Server Http
+            response.sendRedirect("ServerResponse1.jsp?data="+answer);
+		}
+	}
 %>
 
 <%!

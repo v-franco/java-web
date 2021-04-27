@@ -7,7 +7,7 @@
 <jsp:setProperty name="librodp" property="*"/>
 
 <%
-    if(request.getParameter("bCapture") == null)  {
+    if(request.getParameter("bActualizar") == null && request.getParameter("bDelete") == null)  {
 %>
 <html>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -21,7 +21,7 @@
     </head>
 	<body><center>
 		<h2 class="title">JSP Library</h2>
-		<form action='../librojsp/Library.jsp' method='get'>
+		<form action='../librojsp/Editar.jsp' method='get'>
             <table style="width: 50%">
 		<!--<form action='../basicos/ServletBanco' method='get'>-->
             <tr>
@@ -41,8 +41,8 @@
                 <tr>
                     <td colspan="2" align="center">
                         <br><br><br><br>
-                        <input type='submit' name='bCapture' value='Actualizar Datos' class="button">
-
+                        <input type='submit' name='bActualizar' value='Actualizar Datos' class="button">
+                        <input type='submit' name='bDelete' value='Borrar libro' class="button">
                     </td>
                 </tr>
             </table>
@@ -59,14 +59,27 @@
         
         String data, answer;
 
-        if(request.getParameter("bCapture") != null){
+        if(request.getParameter("bActualizar") != null){
             //response.sendRedirect("ServerResponse.jsp?data=Capturar datos");
 
             //data = getData(request);
             data = librodp.toString();
 
             //answer = library.capturar(data);
-            answer = library.capturar(librodp);
+            answer = library.actualizarLibro(librodp);
+            //answer = data
+
+            response.sendRedirect("ServerResponse1.jsp?data="+answer);
+        }
+
+        if(request.getParameter("bDelete") != null){
+            //response.sendRedirect("ServerResponse.jsp?data=Capturar datos");
+
+            //data = getData(request);
+            data = librodp.toString();
+
+            //answer = library.capturar(data);
+            answer = library.borrarLibro(librodp);
             //answer = data
 
             response.sendRedirect("ServerResponse1.jsp?data="+answer);

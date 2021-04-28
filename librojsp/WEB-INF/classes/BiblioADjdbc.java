@@ -6,8 +6,7 @@ import java.sql.*;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
-public class BiblioADjdbc
-{
+public class BiblioADjdbc {
     private PrintWriter archivoOut;
     private BufferedReader archivoIn;
     

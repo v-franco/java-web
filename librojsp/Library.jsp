@@ -74,7 +74,7 @@
             //response.sendRedirect("ServerResponse.jsp?data=Capturar datos");
 
             //data = getData(request);
-            data = librodp.toString();
+            //data = librodp.toString();
 
             //answer = library.capturar(data);
             answer = library.capturar(librodp);

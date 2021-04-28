@@ -4,8 +4,7 @@
 
 	var xhr;
 	
-	function obtenerDatos()
-	{
+	function obtenerDatos() {
 		var datos="";
 		
 		var titulo = document.getElementById("titulo").value;
@@ -20,8 +19,7 @@
 		return datos;
 	}
 	
-	function capturarDatos()
-	{
+	function capturarDatos() {
 		var datos="";
 		var urlString="";
 		
@@ -29,13 +27,11 @@
 		datos = obtenerDatos();
 		
 		// 2. Checar los datos del usuario
-		if(datos == "VACIO")
-		{
+		if(datos == "VACIO") {
 			alert("Algun campo esta vacio...");
 			document.getElementById("transaccion").innerHTML ="Algun campo esta vacio...";
 		}
-		else
-		{
+		else {
 			//alert(datos);
 			//document.getElementById("transaccion").innerHTML = datos;
 			
@@ -50,23 +46,19 @@
 		}	
 	}
 	
-	function establecerConexionAjax(urlString)
-	{
+	function establecerConexionAjax(urlString) {
 		xhr.open("get",urlString,true);
 		xhr.onreadystatechange=obtenerResultadoAjax;
 		xhr.send(null);
 	}
 	
-	function obtenerResultadoAjax()
-	{	
-		if(xhr.readyState == 4)
-		{
+	function obtenerResultadoAjax() {	
+		if(xhr.readyState == 4) {
 			document.getElementById("transaccion").innerHTML = xhr.responseText;
 		}
 	}
 	
-	function consultarLibros()
-	{
+	function consultarLibros() {
 		// 1. Preparar el Url String
 		var urlString = "../librojsp/Library.jsp?bConsult=consultar";
 		
@@ -77,17 +69,14 @@
 		establecerConexionAjax(urlString);
 	}
 	
-	function consultarEditorial()
-	{
+	function consultarEditorial() {
 		// 1. Obtener el valor de la editorial del TextField
 		var edit = document.getElementById("editorial").value;
 		
-		if(edit == "")
-		{
+		if(edit == "") {
 			alert("Teclear una Editorial valida...");
 		}
-		else
-		{
+		else {
 			// 2. Preparar el URL String
 			var urlString = "../librojsp/Library.jsp?bConsultEdit=consultar&editorial="+edit;
 			
@@ -99,17 +88,14 @@
 		}
 	}	
 	
-	function consultarTitulo()
-	{
+	function consultarTitulo() {
 		// 1. Obtener el valor del Titulo del TextField
 		var tit = document.getElementById("titulo").value;
 		
-		if(tit == "")
-		{
+		if(tit == "") {
 			alert("Teclear un Titulo valido...");
 		}
-		else
-		{
+		else {
 			// 2. Preparar el URL String
 			var urlString = "../librojsp/Library.jsp?bConsultTitle=consultar&titulo="+tit;
 			
@@ -121,24 +107,20 @@
 		}
 	}
 	
-	function establecerConexionJson(urlString)
-	{
+	function establecerConexionJson(urlString) {
 		xhr.open("get",urlString,true);
 		//xhr.onreadystatechange=obtenerResultadoJson;
 		xhr.onreadystatechange=obtenerResultadoJson2;
 		xhr.send(null);
 	}
 	
-	function obtenerResultadoJson()
-	{	
-		if(xhr.readyState == 4)
-		{
+	function obtenerResultadoJson() {	
+		if(xhr.readyState == 4) {
 			document.getElementById("transaccion").innerHTML = xhr.responseText;
 		}
 	}
 	
-	function obtenerResultadoJson2()
-	{	
+	function obtenerResultadoJson2() {	
 		var libros;
 		var datos="";
 		var strHtmlImg;
@@ -146,8 +128,7 @@
 		var strRefImg;
 		var imagen="";
 		
-		if(xhr.readyState == 4)
-		{
+		if(xhr.readyState == 4) {
 			//document.getElementById("transaccion").innerHTML = xhr.responseText;
 			
 			//libros = eval("("+xhr.responseText+")");
@@ -157,8 +138,7 @@
 			//document.getElementById("transaccion").innerHTML = clientes;
 			
 			datos = "<table class='beta'>";
-			for(i=0; i<libros.length; i++)
-			{
+			for(i=0; i<libros.length; i++) {
 				imagen = libros[i].titulo + ".jpg"
 				strHtmlImg = "<img src='../librojsp/images/"+imagen+"' width=100 heigth=80>";
  				strRefTit  = "<a href='../librojsp/Library.jsp?bEditar=editar&autor="+libros[i].autor+"&editorial="+libros[i].editorial+"&titulo="+libros[i].titulo+"'>"+libros[i].titulo+"</a>";
@@ -176,8 +156,7 @@
 		}
 	}
 	
-	function consultarLibrosJson()
-	{
+	function consultarLibrosJson() {
 		// 1. Preparar el Url String
 		var urlString = "../librojsp/Library.jsp?bConsultJson=consultar";
 		
@@ -188,17 +167,14 @@
 		establecerConexionJson(urlString);
 	}
 	
-	function consultarEditorialJson()
-	{
+	function consultarEditorialJson() {
 		// 1. Obtener el valor de la editorial del TextField
 		var edit = document.getElementById("editorial").value;
 		
-		if(edit == "")
-		{
+		if(edit == "") {
 			alert("Teclear una Editorial valida...");
 		}
-		else
-		{
+		else {
 			// 2. Preparar el URL String
 			var urlString = "../librojsp/Library.jsp?bConsultEditJson=consultar&editorial="+edit;
 			

@@ -45,9 +45,11 @@
                         <input type='submit' name='bDelete' value='Borrar libro' class="button">
                     </td>
                 </tr>
-            </table>
-        			   
+            </table>   
 		</form>
+        <form action="../librojsp/librofinal.html">
+            <input type="submit" value="Regresar" class="button"/>
+        </form>
 	</center></body>
 </html>
 <%
